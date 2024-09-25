@@ -14,7 +14,7 @@ import {
   Paper
 } from '@mui/material';
 import { styled, keyframes } from '@mui/material/styles';
-import { motion, MotionProps } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 // Keyframes for animations
 const fadeIn = keyframes`
@@ -66,8 +66,11 @@ const StyledCard = styled(Card)(({ theme }) => ({
   },
 }));
 
+// Extract the underlying React component from StyledCard
+const CardComponent = StyledCard.component; 
+
 // Create a motion component version of StyledCard
-const MotionCard = motion<React.ComponentProps<typeof StyledCard>>(StyledCard);
+const MotionCard = motion(CardComponent); 
 
 const toolsData = {
   "Specialized Open-Source MLOps Tools": {
