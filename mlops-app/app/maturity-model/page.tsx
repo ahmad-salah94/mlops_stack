@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Typography, Grid, Box, Card, CardContent, Modal, Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { motion, MotionProps } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 // Styled components
 const MainContainer = styled(Box)(({ theme }) => ({
@@ -41,10 +41,11 @@ const StyledCard = styled(Card)(({ theme }) => ({
   },
 }));
 
-// Create a custom motion component
+// Create a custom motion component with a display name
 const MotionCard = motion(React.forwardRef((props, ref) => (
   <StyledCard {...props} ref={ref} />
 )));
+MotionCard.displayName = 'MotionCard';
 
 const maturityModels = {
   "Google MLOps Maturity Model": {
