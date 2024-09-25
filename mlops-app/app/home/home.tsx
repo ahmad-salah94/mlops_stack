@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import { Typography, Paper, Grid, Box, Card, CardContent, Modal } from '@mui/material';
 import { styled, keyframes } from '@mui/material/styles';
 import { motion } from 'framer-motion';
@@ -55,8 +55,28 @@ const StyledCard = styled(Card)(({ theme }) => ({
   },
 }));
 
-const MotionPaper = motion(StyledPaper);
-const MotionCard = motion(StyledCard);
+// Wrap styled components with forwardRef for compatibility with motion
+const MotionPaper = forwardRef((props, ref) => (
+  <motion.div ref={ref} {...props} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+    <StyledPaper {...props} />
+  </motion.div>
+));
+
+const MotionCard = forwardRef((props, ref) => {
+  const { index } = props; // Extract 'index' from props
+
+  return (
+    <motion.div
+      ref={ref}
+      {...props}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.6 + (index * 0.1) }}
+    >
+      <StyledCard {...props} />
+    </motion.div>
+  );
+});
 
 const principlesData = {
   "Reproducibility": "Reproducibility is at the core of MLOps. It refers to the ability to repeat ML experiments or ML models under the same conditions with identical results. This is crucial for ensuring the reliability and fairness of ML systems. Reproducibility is achieved through consistent versioning and careful experiment management, facilitating debugging, model performance evaluation, and the transfer of models into production. A reproducible ML system promotes confidence in the results and in the decisions made based on these models. Furthermore, reproducibility forms the basis for scaling and automating workflows throughout the lifecycle of ML models.",
@@ -166,6 +186,7 @@ const Home = () => {
                 ].map((item, index) => (
                   <Grid item xs={12} md={4} key={index}>
                     <MotionCard
+                      index={index} // Pass the index as a prop
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: 0.6 + (index * 0.1) }}
@@ -197,6 +218,7 @@ const Home = () => {
                 {Object.keys(principlesData).map((principle, index) => (
                   <Grid item xs={12} sm={6} md={4} key={index}>
                     <MotionCard
+                      index={index} // Pass the index as a prop
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: 1 + (index * 0.1) }}
