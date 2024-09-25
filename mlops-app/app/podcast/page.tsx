@@ -60,14 +60,24 @@ const WaveBar = styled(Box)(({ delay }) => ({
   margin: '0 2px',
   backgroundColor: '#3498db',
   animation: `${waveAnimation} 1s ease-in-out infinite`,
-  animationDelay: `${delay}s`,
 }));
+
 
 const AudioWave = () => {
   return (
     <WaveContainer>
       {[...Array(20)].map((_, index) => (
-        <WaveBar key={index} delay={index * 0.05} /> 
+        <Box 
+          key={index} 
+          sx={{
+            width: '4px',
+            height: '100%',
+            margin: '0 2px',
+            backgroundColor: '#3498db',
+            animation: `${waveAnimation} 1s ease-in-out infinite`,
+            animationDelay: `${index * 0.05}s`,
+          }}
+        />
       ))}
     </WaveContainer>
   );
