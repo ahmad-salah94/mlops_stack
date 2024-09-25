@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Typography, Grid, Box, Card, CardContent, Modal, Avatar } from '@mui/material';
 import { styled, keyframes } from '@mui/material/styles';
-import { motion } from 'framer-motion';
+import { motion, MotionProps } from 'framer-motion';
 import StorageIcon from '@mui/icons-material/Storage';
 import DataObjectIcon from '@mui/icons-material/DataObject';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
@@ -53,7 +53,10 @@ const StyledCard = styled(Card)(({ theme }) => ({
   },
 }));
 
-const MotionCard = motion(StyledCard);
+// Create a new component that combines StyledCard and motion
+const MotionCard = motion(React.forwardRef<HTMLDivElement, React.ComponentProps<typeof StyledCard> & MotionProps>((props, ref) => (
+  <StyledCard ref={ref} {...props} />
+)));
 
 const componentsData = {
   "Data Versioning": {
@@ -102,7 +105,7 @@ const Components = () => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedComponent, setSelectedComponent] = useState('');
 
-  const handleOpenModal = (component) => {
+  const handleOpenModal = (component: string) => {
     setSelectedComponent(component);
     setOpenModal(true);
   };
@@ -180,7 +183,7 @@ const Components = () => {
             {selectedComponent}
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2, color: '#34495e' }}>
-            {componentsData[selectedComponent]?.description}
+            {componentsData[selectedComponent as keyof typeof componentsData]?.description}
           </Typography>
         </Box>
       </Modal>
