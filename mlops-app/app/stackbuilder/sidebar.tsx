@@ -22,11 +22,11 @@ export const Sidebar = () => {
                         <Component />
                         <span className="ml-2 text-sm font-medium">MLOps technical components</span>
                     </Link>
-                    <Link href="/tools" className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-300">
+                    {/*<Link href="/tools" className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-300">
                         <Wrench />
                         <span className="ml-2 text-sm font-medium">MLOps Tools</span>
                     </Link>
-                    {/* <Link href="/maturity-model" className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-300">
+                     <Link href="/maturity-model" className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-300">
                         <Percent />
                         <span className="ml-2 text-sm font-medium">MLOps Maturity Model</span>
                     </Link> */}
