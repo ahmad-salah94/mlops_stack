@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { Typography, Grid, Box, Card, CardContent, Modal, Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { motion } from 'framer-motion';
+import { motion, MotionProps } from 'framer-motion';
 
 // Styled components
 const MainContainer = styled(Box)(({ theme }) => ({
@@ -42,8 +42,10 @@ const StyledCard = styled(Card)(({ theme }) => ({
   },
 }));
 
-// Create a custom motion component with a display name
-const MotionCard = motion(StyledCard);
+// Create a custom motion component
+const MotionCard = motion(React.forwardRef<HTMLDivElement, React.ComponentProps<typeof StyledCard> & MotionProps>((props, ref) => (
+  <StyledCard ref={ref} {...props} />
+)));
 MotionCard.displayName = 'MotionCard';
 
 const maturityModels = {
@@ -89,11 +91,11 @@ const maturityModels = {
   }
 };
 
-const MaturityModel = () => {
+const MaturityModel: React.FC = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [selectedStage, setSelectedStage] = useState(null);
+  const [selectedStage, setSelectedStage] = useState<{ name: string; description: string } | null>(null);
 
-  const handleOpenModal = (model, stage) => {
+  const handleOpenModal = (model: string, stage: { name: string; description: string }) => {
     setSelectedStage(stage);
     setOpenModal(true);
   };
