@@ -117,7 +117,7 @@ const MLOpsReferenceArchitecture = () => {
           The architecture integrates essential MLOps components such as Git repository, feature store, model registry, model serving, model monitoring, and workflow orchestration.
         </Typography>
         <Typography paragraph sx={{ fontStyle: 'italic', color: '#7f8c8d' }}>
-          Note: The "Central Data Repository" is not explicitly detailed in this architecture. The specific approach to data management will depend on your organization's needs, technology stack, and existing infrastructure.
+          Note: The &quot;Central Data Repository&quot; is not explicitly detailed in this architecture. The specific approach to data management will depend on your organization&apos;s needs, technology stack, and existing infrastructure.
         </Typography>
       </StyledPaper>
 

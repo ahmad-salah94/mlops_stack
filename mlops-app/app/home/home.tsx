@@ -3,8 +3,9 @@
 import React, { useState, useEffect, forwardRef } from 'react';
 import { Typography, Paper, Grid, Box, Card, CardContent, Modal } from '@mui/material';
 import { styled, keyframes } from '@mui/material/styles';
-import { motion } from 'framer-motion';
+import { motion, HTMLMotionProps } from 'framer-motion';
 import Head from 'next/head';
+import Image from 'next/image';
 
 // Keyframes for animations
 const fadeIn = keyframes`
@@ -56,27 +57,28 @@ const StyledCard = styled(Card)(({ theme }) => ({
 }));
 
 // Wrap styled components with forwardRef for compatibility with motion
-const MotionPaper = forwardRef((props, ref) => (
-  <motion.div ref={ref} {...props} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+type MotionPaperProps = HTMLMotionProps<"div"> & React.ComponentProps<typeof StyledPaper>;
+
+const MotionPaper = forwardRef<HTMLDivElement, MotionPaperProps>((props, ref) => (
+  <motion.div ref={ref} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
     <StyledPaper {...props} />
   </motion.div>
 ));
+MotionPaper.displayName = 'MotionPaper';
 
-const MotionCard = forwardRef((props, ref) => {
-  const { index } = props; // Extract 'index' from props
+type MotionCardProps = HTMLMotionProps<"div"> & React.ComponentProps<typeof StyledCard> & { index: number };
 
-  return (
-    <motion.div
-      ref={ref}
-      {...props}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.6 + (index * 0.1) }}
-    >
-      <StyledCard {...props} />
-    </motion.div>
-  );
-});
+const MotionCard = forwardRef<HTMLDivElement, MotionCardProps>(({ index, ...props }, ref) => (
+  <motion.div
+    ref={ref}
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5, delay: 0.6 + (index * 0.1) }}
+  >
+    <StyledCard {...props} />
+  </motion.div>
+));
+MotionCard.displayName = 'MotionCard';
 
 const principlesData = {
   "Reproducibility": "Reproducibility is at the core of MLOps. It refers to the ability to repeat ML experiments or ML models under the same conditions with identical results. This is crucial for ensuring the reliability and fairness of ML systems. Reproducibility is achieved through consistent versioning and careful experiment management, facilitating debugging, model performance evaluation, and the transfer of models into production. A reproducible ML system promotes confidence in the results and in the decisions made based on these models. Furthermore, reproducibility forms the basis for scaling and automating workflows throughout the lifecycle of ML models.",
@@ -90,7 +92,7 @@ const principlesData = {
   "Continuous Monitoring": "Continuous Monitoring is an essential component of MLOps. It involves the ongoing monitoring of model performance as well as the quality of incoming data. The purpose of this process is to ensure the continued functionality and effectiveness of ML systems. Monitoring plays a key role in the early detection of anomalies such as data drift. This lays the foundation for timely and automatic retraining of the model. Through continuous assessment of both the performance indicators of the models and the data quality, Continuous Monitoring enables teams to efficiently diagnose and immediately address any deterioration. This significantly contributes to maintaining the reliability, accuracy, and general performance of ML solutions in production."
 };
 
-const Home = () => {
+const Home: React.FC = () => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedPrinciple, setSelectedPrinciple] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
@@ -99,7 +101,7 @@ const Home = () => {
     setIsLoaded(true);
   }, []);
 
-  const handleOpenModal = (principle) => {
+  const handleOpenModal = (principle: string) => {
     setSelectedPrinciple(principle);
     setOpenModal(true);
   };
@@ -107,6 +109,18 @@ const Home = () => {
   const handleCloseModal = () => {
     setOpenModal(false);
   };
+
+  const principles = [
+    "Reproducibility",
+    "Versioning",
+    "Experiment Management",
+    "ML Pipelines",
+    "Automation and Orchestration",
+    "Collaboration",
+    "CI/CD in MLOps",
+    "Continuous Training",
+    "Continuous Monitoring"
+  ];
 
   return (
     <>
@@ -116,9 +130,9 @@ const Home = () => {
       </Head>
       <MainContainer>
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
-          <img src="/sprinteins_logo_tra.png" alt="Sprinteins Logo" height="50"  style={{ width: '100%', maxWidth: 300, display: 'block', margin: 'auto' }} />
-          <Box sx={{ flexGrow: 1 }} /> {/* Push the logo to the left */}
-          <img src="/reutlingen_hochschule_logo.png" alt="Reutlingen Hochschule Logo" height="50"  style={{ width: '100%', maxWidth: 300, display: 'block', margin: 'auto' }} /> {/* Hochschule logo on the right */}
+          <Image src="/sprinteins_logo_tra.png" alt="Sprinteins Logo" width={300} height={50} style={{ width: '100%', maxWidth: 300, display: 'block', margin: 'auto' }} />
+          <Box sx={{ flexGrow: 1 }} />
+          <Image src="/reutlingen_hochschule_logo.png" alt="Reutlingen Hochschule Logo" width={300} height={50} style={{ width: '100%', maxWidth: 300, display: 'block', margin: 'auto' }} />
         </Box>
 
         <motion.div
@@ -137,41 +151,31 @@ const Home = () => {
 
         <Grid container spacing={4}>
           <Grid item xs={12}>
-            <MotionPaper
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Typography variant="h5" gutterBottom sx={{ color: '#3498db' }}>
-                What is MLOps?
-              </Typography>
-              <Typography variant="body1" sx={{ color: '#34495e' }}>
-                MLOps (Machine Learning Operations) is a set of practices that aims to deploy and maintain machine learning models in production reliably and efficiently. It combines machine learning, DevOps, and data engineering to streamline the machine learning lifecycle.
-              </Typography>
+            <MotionPaper>
+              <div> 
+                <Typography variant="h5" gutterBottom sx={{ color: '#3498db' }}>
+                  What is MLOps?
+                </Typography>
+                <Typography variant="body1" sx={{ color: '#34495e' }}>
+                  MLOps (Machine Learning Operations) is a set of practices that aims to deploy and maintain machine learning models in production reliably and efficiently. It combines machine learning, DevOps, and data engineering to streamline the machine learning lifecycle.
+                </Typography>
+              </div>
             </MotionPaper>
           </Grid>
 
           <Grid item xs={12}>
-            <MotionPaper
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
+            <MotionPaper>
               <Typography variant="h5" gutterBottom sx={{ color: '#3498db' }}>
                 MLOps Lifecycle
               </Typography>
               <Box sx={{ textAlign: 'center' }}>
-                <img src="/mlops_lifecycle.png" alt="MLOps Lifecycle" style={{ width: '100%', maxWidth: 600, display: 'block', margin: 'auto' }} />
+                <Image src="/mlops_lifecycle.png" alt="MLOps Lifecycle" width={600} height={400} style={{ width: '100%', maxWidth: 600, display: 'block', margin: 'auto' }} />
               </Box>
             </MotionPaper>
           </Grid>
 
           <Grid item xs={12}>
-            <MotionPaper
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
+            <MotionPaper>
               <Typography variant="h5" gutterBottom sx={{ color: '#3498db' }}>
                 Historical Development
               </Typography>
@@ -185,12 +189,7 @@ const Home = () => {
                   { title: "Birth of MLOps", content: "MLOps emerged as a solution, combining ML, DevOps, and data engineering practices to address these challenges." }
                 ].map((item, index) => (
                   <Grid item xs={12} md={4} key={index}>
-                    <MotionCard
-                      index={index} // Pass the index as a prop
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: 0.6 + (index * 0.1) }}
-                    >
+                    <MotionCard index={index}>
                       <CardContent>
                         <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mb: 1, color: '#2c3e50' }}>{item.title}</Typography>
                         <Typography variant="body2" sx={{ color: '#34495e' }}>{item.content}</Typography>
@@ -203,11 +202,7 @@ const Home = () => {
           </Grid>
 
           <Grid item xs={12}>
-            <MotionPaper
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.8 }}
-            >
+            <MotionPaper>
               <Typography variant="h5" gutterBottom sx={{ color: '#3498db' }}>
                 MLOps Principles
               </Typography>
@@ -215,15 +210,9 @@ const Home = () => {
                 MLOps is guided by several key principles that ensure efficient and reliable machine learning operations:
               </Typography>
               <Grid container spacing={2}>
-                {Object.keys(principlesData).map((principle, index) => (
+                {principles.map((principle, index) => (
                   <Grid item xs={12} sm={6} md={4} key={index}>
-                    <MotionCard
-                      index={index} // Pass the index as a prop
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: 1 + (index * 0.1) }}
-                      onClick={() => handleOpenModal(principle)}
-                    >
+                    <MotionCard index={index} onClick={() => handleOpenModal(principle)}>
                       <CardContent>
                         <Typography variant="subtitle1" sx={{ color: '#2c3e50' }}>{principle}</Typography>
                       </CardContent>
@@ -269,30 +258,5 @@ const Home = () => {
     </>
   );
 };
-
-// Add display names to the components
-const MotionPaperWithDisplayName = forwardRef((props, ref) => (
-  <motion.div ref={ref} {...props} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-    <StyledPaper {...props} />
-  </motion.div>
-));
-MotionPaperWithDisplayName.displayName = 'MotionPaper';
-
-const MotionCardWithDisplayName = forwardRef((props, ref) => {
-  const { index } = props; // Extract 'index' from props
-
-  return (
-    <motion.div
-      ref={ref}
-      {...props}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.6 + (index * 0.1) }}
-    >
-      <StyledCard {...props} />
-    </motion.div>
-  );
-});
-MotionCardWithDisplayName.displayName = 'MotionCard';
 
 export default Home;

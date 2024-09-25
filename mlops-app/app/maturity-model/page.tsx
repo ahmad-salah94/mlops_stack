@@ -1,20 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Typography, Grid, Box, Card, CardContent, Modal, Paper } from '@mui/material';
-import { styled, keyframes } from '@mui/material/styles';
-import { motion } from 'framer-motion';
-
-// Keyframes for animations
-const fadeIn = keyframes`
-  from { opacity: 0; }
-  to { opacity: 1; }
-`;
-
-const slideIn = keyframes`
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-`;
+import { styled } from '@mui/material/styles';
+import { motion, MotionProps } from 'framer-motion';
 
 // Styled components
 const MainContainer = styled(Box)(({ theme }) => ({
@@ -23,7 +12,6 @@ const MainContainer = styled(Box)(({ theme }) => ({
   minHeight: '100vh',
   display: 'flex',
   flexDirection: 'column',
-  animation: `${fadeIn} 1s ease-out`,
 }));
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
@@ -53,7 +41,10 @@ const StyledCard = styled(Card)(({ theme }) => ({
   },
 }));
 
-const MotionCard = motion(StyledCard);
+// Create a custom motion component
+const MotionCard = motion(React.forwardRef((props, ref) => (
+  <StyledCard {...props} ref={ref} />
+)));
 
 const maturityModels = {
   "Google MLOps Maturity Model": {
@@ -140,11 +131,9 @@ const MaturityModel = () => {
             {stages.map((stage, stageIndex) => (
               <MotionCard
                 key={stageIndex}
-                elevation={2}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: stageIndex * 0.1 }}
-                sx={{ mb: 2 }}
                 onClick={() => handleOpenModal(model, stage)}
               >
                 <CardContent>

@@ -14,7 +14,7 @@ import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import CloudQueueIcon from '@mui/icons-material/CloudQueue';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import CategoryIcon from '@mui/icons-material/Category';
-import Image from 'next/image'; // Import for image optimization
+import Image from 'next/image';
 
 // Keyframes for animations
 const fadeIn = keyframes`
@@ -55,9 +55,11 @@ const StyledCard = styled(Card)(({ theme }) => ({
 }));
 
 // Create a new component that combines StyledCard and motion
-const MotionCard = motion(React.forwardRef<HTMLDivElement, React.ComponentProps<typeof StyledCard> & MotionProps>((props, ref) => (
+const MotionCard = React.forwardRef<HTMLDivElement, React.ComponentProps<typeof StyledCard> & MotionProps>((props, ref) => (
   <StyledCard ref={ref} {...props} />
-)));
+));
+
+MotionCard.displayName = 'MotionCard';
 
 const componentsData = {
   "Data Versioning": {
@@ -102,7 +104,7 @@ const componentsData = {
   }
 };
 
-const Components = () => {
+const Components: React.FC = () => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedComponent, setSelectedComponent] = useState('');
 
@@ -198,7 +200,6 @@ const Components = () => {
   );
 };
 
-// Add display name to the MotionCard component
-MotionCard.displayName = 'MotionCard';
+Components.displayName = 'Components';
 
 export default Components;
