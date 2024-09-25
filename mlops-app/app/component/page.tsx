@@ -14,6 +14,7 @@ import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import CloudQueueIcon from '@mui/icons-material/CloudQueue';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import CategoryIcon from '@mui/icons-material/Category';
+import Image from 'next/image'; // Import for image optimization
 
 // Keyframes for animations
 const fadeIn = keyframes`
@@ -131,7 +132,13 @@ const Components = () => {
       </motion.div>
 
       <Box sx={{ textAlign: 'center', mb: 4 }}>
-        <img src="/mlops stack.png" alt="MLOps Components" style={{ width: '100%', maxWidth: 600, display: 'block', margin: 'auto' }} />
+        <Image
+          src="/mlops stack.png"
+          alt="MLOps Components"
+          width={600}
+          height={300}
+          style={{ display: 'block', margin: 'auto' }}
+        />
       </Box>
 
       <Grid container spacing={3}>
@@ -190,5 +197,8 @@ const Components = () => {
     </MainContainer>
   );
 };
+
+// Add display name to the MotionCard component
+MotionCard.displayName = 'MotionCard';
 
 export default Components;

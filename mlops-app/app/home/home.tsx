@@ -270,4 +270,29 @@ const Home = () => {
   );
 };
 
+// Add display names to the components
+const MotionPaperWithDisplayName = forwardRef((props, ref) => (
+  <motion.div ref={ref} {...props} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+    <StyledPaper {...props} />
+  </motion.div>
+));
+MotionPaperWithDisplayName.displayName = 'MotionPaper';
+
+const MotionCardWithDisplayName = forwardRef((props, ref) => {
+  const { index } = props; // Extract 'index' from props
+
+  return (
+    <motion.div
+      ref={ref}
+      {...props}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.6 + (index * 0.1) }}
+    >
+      <StyledCard {...props} />
+    </motion.div>
+  );
+});
+MotionCardWithDisplayName.displayName = 'MotionCard';
+
 export default Home;

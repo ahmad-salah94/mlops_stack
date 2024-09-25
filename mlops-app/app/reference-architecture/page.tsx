@@ -1,16 +1,16 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { 
-  Typography, 
-  Box, 
-  Paper, 
-  List, 
-  ListItem, 
-  ListItemText, 
-  Divider, 
-  Accordion, 
-  AccordionSummary, 
+import {
+  Typography,
+  Box,
+  Paper,
+  List,
+  ListItem,
+  ListItemText,
+  Divider,
+  Accordion,
+  AccordionSummary,
   AccordionDetails,
   Link,
   Table,
@@ -22,7 +22,7 @@ import {
 import { styled, keyframes } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { motion } from 'framer-motion';
-import ImageZoom from 'react-medium-image-zoom'; // Import for image zoom
+import Image from 'next/image'; // Import for image optimization
 
 // Keyframes for animations
 const fadeIn = keyframes`
@@ -105,16 +105,16 @@ const MLOpsReferenceArchitecture = () => {
           MLOps Reference Architecture
         </Typography>
       </motion.div>
-      
+
       <StyledPaper elevation={3}>
         <Typography variant="h5" gutterBottom sx={{ color: '#2980b9' }}>
           Overview
         </Typography>
         <Typography paragraph>
-          This MLOps Reference Architecture provides a structured framework for managing the entire machine learning (ML) project lifecycle. It encompasses key phases, from project initiation and data management to automated workflow pipelines, ensuring efficiency, reproducibility, and collaboration. 
+          This MLOps Reference Architecture provides a structured framework for managing the entire machine learning (ML) project lifecycle. It encompasses key phases, from project initiation and data management to automated workflow pipelines, ensuring efficiency, reproducibility, and collaboration.
         </Typography>
         <Typography paragraph>
-          The architecture integrates essential MLOps components such as Git repository, feature store, model registry, model serving, model monitoring, and workflow orchestration.  
+          The architecture integrates essential MLOps components such as Git repository, feature store, model registry, model serving, model monitoring, and workflow orchestration.
         </Typography>
         <Typography paragraph sx={{ fontStyle: 'italic', color: '#7f8c8d' }}>
           Note: The "Central Data Repository" is not explicitly detailed in this architecture. The specific approach to data management will depend on your organization's needs, technology stack, and existing infrastructure.
@@ -126,8 +126,13 @@ const MLOpsReferenceArchitecture = () => {
           Architecture Diagram
         </SectionTitle>
         <StyledPaper elevation={3} sx={{ textAlign: 'center' }}>
-
-            <img src="/referenzarchitektur.jpg" alt="MLOps Lifecycle" style={{ width: '100%', maxWidth: 800, display: 'block', margin: 'auto' }} /> 
+          <Image
+            src="/referenzarchitektur.jpg"
+            alt="MLOps Lifecycle"
+            width={800}
+            height={400}
+            style={{ display: 'block', margin: 'auto' }}
+          />
         </StyledPaper>
       </Box>
 
@@ -187,7 +192,7 @@ const MLOpsReferenceArchitecture = () => {
                   ))}
                 </TableBody>
               </Table>
-            ) 
+            )
           },
           {
             title: '4. Prototyping, Validation, and Iteration',
@@ -294,7 +299,7 @@ const MLOpsReferenceArchitecture = () => {
         </SectionTitle>
         <StyledPaper>
           <Typography paragraph>
-            This MLOps reference architecture provides a robust framework for organizations to build successful, scalable, and efficient ML projects. By embracing a systematic and collaborative approach, it empowers teams to overcome common challenges, enhance reproducibility, and achieve sustainable business outcomes. 
+            This MLOps reference architecture provides a robust framework for organizations to build successful, scalable, and efficient ML projects. By embracing a systematic and collaborative approach, it empowers teams to overcome common challenges, enhance reproducibility, and achieve sustainable business outcomes.
           </Typography>
         </StyledPaper>
       </Box>
