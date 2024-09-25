@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   Typography, 
   Grid, 
@@ -14,7 +14,7 @@ import {
   Paper
 } from '@mui/material';
 import { styled, keyframes } from '@mui/material/styles';
-import { motion } from 'framer-motion';
+import { motion, MotionProps } from 'framer-motion';
 
 // Keyframes for animations
 const fadeIn = keyframes`
@@ -66,7 +66,8 @@ const StyledCard = styled(Card)(({ theme }) => ({
   },
 }));
 
-const MotionCard = motion(StyledCard);
+// Create a motion component version of StyledCard
+const MotionCard = motion<React.ComponentProps<typeof StyledCard>>(StyledCard);
 
 const toolsData = {
   "Specialized Open-Source MLOps Tools": {
@@ -116,12 +117,12 @@ const toolsData = {
   }
 };
 
-const Tools = () => {
+const Tools: React.FC = () => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedTool, setSelectedTool] = useState('');
   const [currentTab, setCurrentTab] = useState(0);
 
-  const handleOpenModal = (tool) => {
+  const handleOpenModal = (tool: string) => {
     setSelectedTool(tool);
     setOpenModal(true);
   };
@@ -130,7 +131,7 @@ const Tools = () => {
     setOpenModal(false);
   };
 
-  const handleChangeTab = (event, newValue) => {
+  const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
     setCurrentTab(newValue);
   };
 
@@ -229,14 +230,14 @@ const Tools = () => {
           </Tabs>
           {currentTab === 0 && (
             <ul style={{ color: '#34495e' }}>
-              {toolsData[selectedTool]?.advantages.map((advantage, index) => (
+              {toolsData[selectedTool as keyof typeof toolsData]?.advantages.map((advantage, index) => (
                 <li key={index}>{advantage}</li>
               ))}
             </ul>
           )}
           {currentTab === 1 && (
             <ul style={{ color: '#34495e' }}>
-              {toolsData[selectedTool]?.disadvantages.map((disadvantage, index) => (
+              {toolsData[selectedTool as keyof typeof toolsData]?.disadvantages.map((disadvantage, index) => (
                 <li key={index}>{disadvantage}</li>
               ))}
             </ul>
