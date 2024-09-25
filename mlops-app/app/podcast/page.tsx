@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Typography, Box, Paper } from '@mui/material';
 import { styled, keyframes } from '@mui/material/styles';
 import { motion } from 'framer-motion';
-import AudioPlayer from 'react-h5-audio-player';
+import AudioPlayer, { RHAP_UI } from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 
 // Keyframes for animations
@@ -129,10 +129,16 @@ const PodcastPage = () => {
           ref={audioPlayerRef}
           src="/MLOps-Thesis-Ahmad_Salah-podcast.wav"
           showJumpControls={false}
-          showDownload={false}
-          showFilledProgress={true}
-          customProgressBarSection={["PROGRESS_BAR", "CURRENT_TIME", "DURATION"]}
-          customControlsSection={["MAIN_CONTROLS", "VOLUME_CONTROLS"]}
+          showDownloadProgress={false}
+          customProgressBarSection={[
+            RHAP_UI.PROGRESS_BAR,
+            RHAP_UI.CURRENT_TIME,
+            RHAP_UI.DURATION,
+          ]}
+          customControlsSection={[
+            RHAP_UI.MAIN_CONTROLS,
+            RHAP_UI.VOLUME_CONTROLS,
+          ]}
           autoPlayAfterSrcChange={false}
           style={{
             boxShadow: 'none',
