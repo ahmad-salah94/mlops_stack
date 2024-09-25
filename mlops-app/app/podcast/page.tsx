@@ -67,7 +67,7 @@ const AudioWave = () => {
   return (
     <WaveContainer>
       {[...Array(20)].map((_, index) => (
-        <WaveBar key={index} delay={index * 0.05} />
+        <WaveBar key={index} delay={index * 0.05} /> 
       ))}
     </WaveContainer>
   );
