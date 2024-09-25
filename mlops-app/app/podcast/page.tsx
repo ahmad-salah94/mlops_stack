@@ -75,27 +75,25 @@ const AudioWave = () => {
 };
 
 const PodcastPage = () => {
-  const audioPlayerRef = useRef(null);
+  const audioPlayerRef = useRef<AudioPlayer>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
-    const audioPlayer = audioPlayerRef.current;
+    const audioElement = audioPlayerRef.current?.audio?.current;
 
-    if (audioPlayer && audioPlayer.audio.current) {
-      const audio = audioPlayer.audio.current;
-
+    if (audioElement) {
       const handlePlay = () => setIsPlaying(true);
       const handlePause = () => setIsPlaying(false);
       const handleEnded = () => setIsPlaying(false);
 
-      audio.addEventListener('play', handlePlay);
-      audio.addEventListener('pause', handlePause);
-      audio.addEventListener('ended', handleEnded);
+      audioElement.addEventListener('play', handlePlay);
+      audioElement.addEventListener('pause', handlePause);
+      audioElement.addEventListener('ended', handleEnded);
 
       return () => {
-        audio.removeEventListener('play', handlePlay);
-        audio.removeEventListener('pause', handlePause);
-        audio.removeEventListener('ended', handleEnded);
+        audioElement.removeEventListener('play', handlePlay);
+        audioElement.removeEventListener('pause', handlePause);
+        audioElement.removeEventListener('ended', handleEnded);
       };
     }
   }, []);
