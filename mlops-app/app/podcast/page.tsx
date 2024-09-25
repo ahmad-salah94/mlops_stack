@@ -54,15 +54,6 @@ const WaveContainer = styled(Box)({
   marginBottom: '20px',
 });
 
-const WaveBar = styled(Box)(({ delay }) => ({
-  width: '4px',
-  height: '100%',
-  margin: '0 2px',
-  backgroundColor: '#3498db',
-  animation: `${waveAnimation} 1s ease-in-out infinite`,
-}));
-
-
 const AudioWave = () => {
   return (
     <WaveContainer>
@@ -102,11 +93,9 @@ const PodcastPage = () => {
       audio.addEventListener('ended', handleEnded);
 
       return () => {
-        if (audio) {
-          audio.removeEventListener('play', handlePlay);
-          audio.removeEventListener('pause', handlePause);
-          audio.removeEventListener('ended', handleEnded);
-        }
+        audio.removeEventListener('play', handlePlay);
+        audio.removeEventListener('pause', handlePause);
+        audio.removeEventListener('ended', handleEnded);
       };
     }
   }, []);
