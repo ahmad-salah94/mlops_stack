@@ -26,10 +26,10 @@ export const Sidebar = () => {
                         <Wrench />
                         <span className="ml-2 text-sm font-medium">MLOps Tools</span>
                     </Link>
-                    <Link href="/maturity-model" className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-300">
+                    {/* <Link href="/maturity-model" className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-300">
                         <Percent />
                         <span className="ml-2 text-sm font-medium">MLOps Maturity Model</span>
-                    </Link>
+                    </Link> */}
                     <Link href="/reference-architecture" className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-300">
                         <Castle />
                         <span className="ml-2 text-sm font-medium">MLOps Reference-Architecture</span>
