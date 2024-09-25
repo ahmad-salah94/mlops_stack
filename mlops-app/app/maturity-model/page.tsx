@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { Typography, Grid, Box, Card, CardContent, Modal, Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { motion } from 'framer-motion';
@@ -42,9 +43,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
 }));
 
 // Create a custom motion component with a display name
-const MotionCard = motion(React.forwardRef((props, ref) => (
-  <StyledCard {...props} ref={ref} />
-)));
+const MotionCard = motion(StyledCard);
 MotionCard.displayName = 'MotionCard';
 
 const maturityModels = {
@@ -120,7 +119,7 @@ const MaturityModel = () => {
       </motion.div>
 
       <StyledPaper elevation={3} sx={{ textAlign: 'center', marginBottom: 4 }}>
-        <img src="/mlops_mat_model.png" alt="MLOps Maturity Models" style={{ width: '100%', maxWidth: 600, display: 'block', margin: 'auto' }} />
+        <Image src="/mlops_mat_model.png" alt="MLOps Maturity Models" width={600} height={400} layout="responsive" />
       </StyledPaper>
 
       <Grid container spacing={4}>
